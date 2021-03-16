@@ -4,6 +4,7 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
+    @tweet = Post.published.page(params[:page])
     @tweets = Tweet.all.order('created_at DESC')
     @tweet = Tweet.new
 
