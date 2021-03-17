@@ -3,9 +3,15 @@ Rails.application.routes.draw do
   
   get 'home/index'
   
-  resources :tweets
-  
+  resources :tweets do
+    member do
+      post 'create_rt'
+    end
+  end
+
   put '/tweet/:id/like', to: 'tweets#like', as: 'like'
+  #############################################
+  delete '/tweet/:id/unlike', to: 'tweets#unlike', as: 'unlike'
 
 
   devise_for :users, controllers: {

@@ -4,8 +4,8 @@
 <div class="row">
   <div>
     <%= rel_next_prev_link_tags @tweets %>
-    <%= link_to_prev_page @tweets, 'Prev Page' %>
-    <%= link_to_next_page @tweets, 'Next Page' %>
+    <%= link_to_next_page @tweets, 'More Tweets' %>
+    <%= link_to_prev_page @tweets, 'Less Tweets' %>
   </div>
 </div>
 
@@ -14,38 +14,49 @@
 <table>
   <thead>
     <tr>
+      <th>retweet</th>
       <th>Content</th>
+      <th>User</th>
+
+      <th>Retweet</th>
+      <th>Retweet Count</th>
+
 
       <th colspan="3"></th>
     </tr>
   </thead>
 
+
+
+  <% if user_signed_in? %>
+    <%= render 'form', tweet: @tweet %>
+  <% end %>
+
   <tbody>
     <% @tweets.each do |tweet| %>
       <tr>
+        <td><%= button_to 'rt', create_rt_tweet_path(tweet), method: :post %></td>
         <td><%= tweet.content %></td>
         <td><img src="<%= tweet.user.img %>" class="image" alt=""></td>
-        <td> 
-        <% if user_signed_in? %>
-             <%= render 'form', tweet: @tweet %>
+        <td><%= tweet.retweet&.id %></td> 
+        <td><%= tweet.retweets.count %></td> 
 
-            <% if @tweet.liked?(current_user) %>
-              <%= button_to 'Like', like_path(tweet), method: 'put', disabled: true %>
+        <% if user_signed_in? %>
+        <td>
+            <% if tweet.liked?(current_user) %>
+              <%= button_to 'Unlike', like_path(tweet), method: 'put', disabled: true %>
               <%= tweet.likes.count %>
             <% else %>
               <%= button_to 'Like', like_path(tweet), method: 'put' %>
               <%= tweet.likes.count %>
-
             <% end %>
-            </td>
-            <td><%# tweet.retweet.map(:id) %></td>
-            <%= button_to 'Retweet', tweets_path %>
+        </td>
             <td><%= link_to 'Show', tweet %></td>
             <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
             <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
+        <% end %>
 
-        </tr>
+      </tr>
     <% end %>
   </tbody>
 </table>
@@ -69,7 +80,7 @@
 <div class="row">
   <div>
     <%= rel_next_prev_link_tags @tweets %>
-    <%= link_to_prev_page @tweets, 'Prev Page' %>
-    <%= link_to_next_page @tweets, 'Next Page' %>
+    <%= link_to_prev_page @tweets, 'Less Tweets' %>
+    <%= link_to_next_page @tweets, 'More Tweets' %>
   </div>
 </div>

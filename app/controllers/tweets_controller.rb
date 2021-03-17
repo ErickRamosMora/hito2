@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: [:index, :show, :like]
+  before_action :set_tweet, only: %i[ show edit update destroy create_rt ]
+  before_action :authenticate_user!, except: [:index, :show, :like, :unlike]
 
   # GET /tweets or /tweets.json
   def index
@@ -63,9 +63,15 @@ class TweetsController < ApplicationController
     Like.create(user_id: current_user.id, tweet_id: @tweet.id)
     redirect_to tweets_path(@tweet)
   end
-
-  def retweet
-    
+#####################################
+  def unlike
+    @tweet = Tweet.all.find(params[:id])
+    Like.destroy(user_id: current_user.id, tweet_id: @tweet.id)
+    redirect_to tweets_path(@tweet)
+  end
+################################################
+  def create_rt
+    redirect_to tweet_path(@tweet)
   end
 
   private
@@ -76,6 +82,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:content, :img, :user_id)
+      params.require(:tweet).permit(:content, :img, :user_id, :retweet_id)
     end
 end
