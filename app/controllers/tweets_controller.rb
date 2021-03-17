@@ -4,10 +4,8 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
-    @tweet = Post.published.page(params[:page])
-    @tweets = Tweet.all.order('created_at DESC')
+    @tweets = Tweet.all.order('created_at DESC').page(params[:page])
     @tweet = Tweet.new
-
   end
 
   # GET /tweets/1 or /tweets/1.json
@@ -25,7 +23,7 @@ class TweetsController < ApplicationController
 
   # POST /tweets or /tweets.json
   def create
-    @tweet = Tweet.new(tweet_params)
+    @tweet = Tweet.new(tweet_params.merge(user: current_user))
 
     respond_to do |format|
       if @tweet.save
