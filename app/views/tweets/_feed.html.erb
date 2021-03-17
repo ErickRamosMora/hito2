@@ -23,16 +23,24 @@
     <% @tweets.each do |tweet| %>
       <tr>
         <td><%= tweet.content %></td>
-        <img src="<%= tweet.user.img %>" class="image" alt="">
+        <td><img src="<%= tweet.user.img %>" class="image" alt=""></td>
+      
         <td><%= link_to 'Show', tweet %></td>
         <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
         <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+
+        </tr>
     <% end %>
   </tbody>
 </table>
-
-
+<br>
+      <!--  <%# if user_signed_in? %> -->
+      <!--    <%# if @tweet.liked?(current_user) %> -->
+      <!--      <%# button_to 'Like', like_path(@tweet), method: 'put', disabled: true %> -->
+      <!--    <%# else %> -->
+      <!--      <%# button_to 'Like', like_path(@tweet), method: 'put' %> -->
+      <!--    <%# end %> -->
+      <!--  <%# end %> -->
 
 <br>
 
@@ -44,6 +52,6 @@
 
 <div class="row">
   <div>
-    <%= paginate @tweets %>
+    <%= paginate @tweets%>
   </div>
 </div>

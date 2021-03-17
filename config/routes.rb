@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  resources :tweets
   root to: 'tweets#index'
   
   get 'home/index'
+  
+  resources :tweets
+  
+  put '/tweet/:id/like', to: 'tweets#like', as: 'like'
 
 
   devise_for :users, controllers: {
