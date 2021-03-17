@@ -7,4 +7,8 @@ class Tweet < ApplicationRecord
   end
 
   validates :content, presence: true
+
+  has_many :retweet, class_name: 'Tweet', foreign_key: 'retweet_id'
+  belongs_to :retweet, class_name: 'Tweet', optional: true
+
 end

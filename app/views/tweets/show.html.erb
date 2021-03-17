@@ -16,13 +16,6 @@
 </p>
 
 
-<% if user_signed_in? %>
-  <% if @tweet.liked?(current_user) %>
-    <%= button_to 'Like', like_path(@tweet), method: 'put', disabled: true %>
-  <% else %>
-    <%= button_to 'Like', like_path(@tweet), method: 'put' %>
-  <% end %>
-<% end %>
 
 
 <%= link_to 'Edit', edit_tweet_path(@tweet) %> |
