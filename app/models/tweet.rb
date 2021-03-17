@@ -1,5 +1,5 @@
 class Tweet < ApplicationRecord
   belongs_to :user
 
-  validate
+  validates :content, presence: true
 end
