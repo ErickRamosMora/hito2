@@ -12,14 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= form.label "Tweet about it" %>
+    <br>
+    <%= form.text_area :content, placeholder: "What's on your mind" %>
   </div>
 
 
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.button :submit do %>
+      <i class="far fa-edit"></i>
+    <% end %>
   </div>
 <% end %>
+
 

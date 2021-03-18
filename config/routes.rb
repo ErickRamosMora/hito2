@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  root to: 'tweets#index'
+  root 'tweets#index'
   
-  get 'home/index'
   
   resources :tweets do
     member do
@@ -10,8 +9,8 @@ Rails.application.routes.draw do
   end
 
   put '/tweet/:id/like', to: 'tweets#like', as: 'like'
+  delete '/tweet/:id/like', to: 'tweets#like'
   #############################################
-  delete '/tweet/:id/unlike', to: 'tweets#unlike', as: 'unlike'
 
 
   devise_for :users, controllers: {

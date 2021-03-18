@@ -1,7 +1,43 @@
-<h1>Tweets</h1>
+<h1>Home</h1>
 
 
-<div class="row">
+
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>User Photo</th>
+      <th>Name</th>
+      <th>Usernames</th>
+      <th>Content</th>
+      <th>Retweet</th>
+      <th>Retweet Count</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <% if user_signed_in? %>
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <img src="<%= current_user.img %>" class="image" alt="">
+          <br>
+          <%= current_user.name %>
+          <br>
+          <%= current_user.username %>
+          
+        </div>
+        <div class="col">
+          <%= render 'tweets/form', tweet: @tweet %>
+        </div>
+      </div>
+    </div>
+  <% end  %>
+
+
+  <div class="row">
   <div>
     <%= rel_next_prev_link_tags @tweets %>
     <%= link_to_next_page @tweets, 'More Tweets' %>
@@ -10,50 +46,57 @@
 </div>
 
 
-
-<table>
-  <thead>
-    <tr>
-      <th>retweet</th>
-      <th>Content</th>
-      <th>User</th>
-
-      <th>Retweet</th>
-      <th>Retweet Count</th>
-
-
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-
-
-  <% if user_signed_in? %>
-    <%= render 'form', tweet: @tweet %>
-  <% end %>
-
   <tbody>
     <% @tweets.each do |tweet| %>
       <tr>
-        <td><%= button_to 'rt', create_rt_tweet_path(tweet), method: :post %></td>
-        <td><%= tweet.content %></td>
+
         <td><img src="<%= tweet.user.img %>" class="image" alt=""></td>
+        <td><%= tweet.user.name %></td> 
+        <td><%= tweet.user.username %></td> 
+
+        <td><%= tweet.content %></td>
         <td><%= tweet.retweet&.id %></td> 
         <td><%= tweet.retweets.count %></td> 
 
         <% if user_signed_in? %>
-        <td>
-            <% if tweet.liked?(current_user) %>
-              <%= button_to 'Unlike', like_path(tweet), method: 'put', disabled: true %>
-              <%= tweet.likes.count %>
-            <% else %>
-              <%= button_to 'Like', like_path(tweet), method: 'put' %>
-              <%= tweet.likes.count %>
+
+          <td>
+              <% if tweet.liked?(current_user) %>
+                <%= link_to like_path(tweet), method: 'put' do %>
+                  <i class="fas fa-heart"></i>
+                <% end %>
+                <%= tweet.likes.count %>
+              <% else %>
+                <%= link_to like_path(tweet), method: 'put' do %>
+                  <i class="far fa-heart"></i>
+                <% end %>
+                <%= tweet.likes.count %>
+              <% end %>
+          </td>
+
+          <td>
+            <%= link_to tweet do %>
+              <i class="fas fa-link"></i>
             <% end %>
-        </td>
-            <td><%= link_to 'Show', tweet %></td>
-            <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
-            <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </td>
+
+          <td>
+            <%= link_to edit_tweet_path(tweet) do %>
+              <i class="fas fa-pencil-alt"></i>
+            <% end %>
+          </td>
+
+          <td>
+            <%= link_to create_rt_tweet_path(tweet), method: :post do %>
+              <i class="fas fa-retweet"></i>
+            <% end %>
+          </td>
+          
+          <!-- <td>
+            <%= link_to  tweet, method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class="far fa-trash-alt"></i>  
+            <% end %>
+          </td> -->
         <% end %>
 
       </tr>
@@ -70,9 +113,6 @@
       <!--  <%# end %> -->
 
 <br>
-
-<%= link_to 'New Tweet', new_tweet_path %>
-
 
 
 
