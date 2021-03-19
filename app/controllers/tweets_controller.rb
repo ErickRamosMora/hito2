@@ -4,12 +4,14 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
-    @tweets = Tweet.all.order('created_at DESC').page(params[:page])
+    #@tweets = Tweet.all.order('created_at DESC').page(params[:page])
     @tweet = Tweet.new
-    # @tweets = Tweet.search(params[:searchbox])
-    # respond_to do |format|
-    #   format.html # index.html.erb
-    # end
+    @search = params["search"]
+    if @search.present?
+      @content = @search["content"]
+      @tweets = Tweet.where(content: @content)
+    end
+    @tweets = Tweet.where("content ILIKE ?", "%#{@content}%").order('created_at DESC').page(params[:page])
   end
 
   # GET /tweets/1 or /tweets/1.json

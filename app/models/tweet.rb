@@ -17,13 +17,7 @@ class Tweet < ApplicationRecord
   # belongs_to :retweet, class_name: 'Tweet', optional: true
 
 
-#   #search
-#   def self.search(search)
-#     if search 
-#        where('content LIKE ?', "%#{search}%")
-#      else
-#        scoped
-#      end
-#    end
+
+
   
 end
