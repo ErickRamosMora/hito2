@@ -31,6 +31,9 @@ gem 'bootsnap', '>= 1.4.4', require: false
 #Authentication 
 gem 'devise'
 
+#ActiveAdmin
+gem 'activeadmin'
+
 #Kaminari
 gem 'kaminari'
 

@@ -1,6 +1,9 @@
 <h1>Home</h1>
 
-
+<%# form_tag({:controller => "tweets", :action => "index"}, :method => :get) do %>
+  <%# text_field_tag "searchbox", params[:searchbox] %>
+  <%# submit_tag "Search", :name => nil %>
+<%# end %>
 
 
 
@@ -53,10 +56,18 @@
         <td><img src="<%= tweet.user.img %>" class="image" alt=""></td>
         <td><%= tweet.user.name %></td> 
         <td><%= tweet.user.username %></td> 
+        <td><%# if user_signed_in? %>
+              <%# if current_user.following?(@user) %>
+                <%# button_to 'Unfollow', user_friendship_path(tweet.user), method: :delete, class:"btn btn-info" %>
+              <%# else %>
+                <%# button_to 'Follow', user_friendships_path(tweet.user), class:"btn btn-info" %>
+              <%# end %>
+            <%# end %>
+        </td>
 
         <td><%= tweet.content %></td>
-        <td><%= tweet.retweet&.id %></td> 
-        <td><%= tweet.retweets.count %></td> 
+        <td><%# tweet.retweet&.id %></td> 
+        <td><%# tweet.retweets.count %></td> 
 
         <% if user_signed_in? %>
 
@@ -92,11 +103,11 @@
             <% end %>
           </td>
           
-          <!-- <td>
+          <td>
             <%= link_to  tweet, method: :delete, data: { confirm: 'Are you sure?' } do %>
               <i class="far fa-trash-alt"></i>  
             <% end %>
-          </td> -->
+          </td>
         <% end %>
 
       </tr>
@@ -104,13 +115,6 @@
   </tbody>
 </table>
 <br>
-      <!--  <%# if user_signed_in? %> -->
-      <!--    <%# if @tweet.liked?(current_user) %> -->
-      <!--      <%# button_to 'Like', like_path(@tweet), method: 'put', disabled: true %> -->
-      <!--    <%# else %> -->
-      <!--      <%# button_to 'Like', like_path(@tweet), method: 'put' %> -->
-      <!--    <%# end %> -->
-      <!--  <%# end %> -->
 
 <br>
 

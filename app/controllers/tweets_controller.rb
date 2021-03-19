@@ -6,6 +6,10 @@ class TweetsController < ApplicationController
   def index
     @tweets = Tweet.all.order('created_at DESC').page(params[:page])
     @tweet = Tweet.new
+    # @tweets = Tweet.search(params[:searchbox])
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    # end
   end
 
   # GET /tweets/1 or /tweets/1.json
@@ -66,15 +70,15 @@ class TweetsController < ApplicationController
     redirect_to tweets_path(@tweet)
   end
 #####################################
-  def unlike
-    @tweet = Tweet.all.find(params[:id])
-    @tweet.destroy
-    redirect_to tweets_path(@tweet)
-  end
-################################################
-  def create_rt
-    redirect_to tweet_path(@tweet)
-  end
+#   def unlike
+#     @tweet = Tweet.all.find(params[:id])
+#     @tweet.destroy
+#     redirect_to tweets_path(@tweet)
+#   end
+# ################################################
+#   def create_rt
+#     redirect_to tweet_path(@tweet)
+#   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
