@@ -1,4 +1,6 @@
 class Tweet < ApplicationRecord
+  has_many :tags
+
   belongs_to :user
   has_many :likes, dependent: :destroy
   
@@ -38,6 +40,27 @@ class Tweet < ApplicationRecord
   #     Tag.where(name: n.strip).first_or_create!
   #   end
   # end
+
+
+
+  after_create do 
+    tweet = Tweet.find_by(id: self.id)
+    hashtags = self.content.scan(/#\w+/)
+    hashtags.uniq.map do |hashtag|
+      tag = Tag.find_or_create_by(name: hashtag.downcase.delete('#'))
+      tweet.tags << tag
+    end
+  end
+
+  before_update do 
+    tweet = Tweet.find_by(id: self.id)
+    tweet.tags.clear
+    hashtags = self.content.scan(/#\w+/)
+    hashtags.uniq.map do |hashtag|
+      tag = Tag.find_or_create_by(name: hashtag.downcase.delete('#'))
+      tweet.tags << tag
+    end
+  end
 
   
 end

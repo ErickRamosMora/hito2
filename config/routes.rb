@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   root 'tweets#index'
   
+  get '/tweets/hashtag/:name', to: 'tweets#hashtags'
+
   
   resources :tweets do
     member do

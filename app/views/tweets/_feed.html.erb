@@ -61,7 +61,7 @@
             <%# end %>
         </td>
 
-        <td><%= tweet.content %></td>
+        <td><%= render_with_hashtags(tweet.content) %></td>
         <td><%# tweet.retweet&.id %></td> 
         <td><%# tweet.retweets.count %></td> 
 
